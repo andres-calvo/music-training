@@ -18,11 +18,11 @@ const TREBLE_CLEF_NOTES = [
 ];
 
 const BASS_CLEF_NOTES = [
-//  { name: "Mi1", position: 1 },   // Mi de la octava 3 (línea invisible)
-//  { name: "Fa1", position: 2 },   // Fa de la octava 3 (espacio)
-//  { name: "Sol1", position: 3 },  // Sol de la octava 3 (primera línea)
-//  { name: "La1", position: 4 },   // La de la octava 3 (espacio)
-//  { name: "Si1", position: 5 },   // Si de la octava 3 (segunda línea)
+ { name: "Mi1", position: 1 },   // Mi de la octava 3 (línea invisible)
+  { name: "Fa1", position: 2 },   // Fa de la octava 3 (espacio)
+ { name: "Sol1", position: 3 },  // Sol de la octava 3 (primera línea)
+  { name: "La1", position: 4 },   // La de la octava 3 (espacio)
+  { name: "Si1", position: 5 },   // Si de la octava 3 (segunda línea)
   { name: "Do2", position: 6 },   // Do de la octava 4 (espacio)
   { name: "Re2", position: 7 },   // Re de la octava 4 (tercera línea)
   { name: "Mi2", position: 8 },   // Mi de la octava 4 (espacio)
