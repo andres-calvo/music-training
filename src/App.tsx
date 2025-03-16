@@ -17,7 +17,7 @@ const NOTES = [
   { name: "La4", position: 13 }   // La de la octava 4 (línea adicional arriba)
 ];
 
-const BASE_TIMER = 30;
+const BASE_TIMER = 15;
 
 const getRandomNote = () => NOTES[Math.floor(Math.random() * NOTES.length)];
 
@@ -32,6 +32,8 @@ function App() {
   const [timer, setTimer] = useState(BASE_TIMER);
   const [message, setMessage] = useState("");
   const [isDebugMode, setIsDebugMode] = useState(false);
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
 
   useEffect(() => {
     const incorrectNotes = NOTES.filter(n => n.name !== currentNote.name)
@@ -44,6 +46,7 @@ function App() {
   useEffect(() => {
     if (timer === 0) {
       setMessage("¡Tiempo agotado!");
+      setStreak(0); // Reiniciar racha cuando se agota el tiempo
     }
     const interval = setInterval(() => setTimer(t => (t > 0 ? t - 1 : 0)), 1000);
     return () => clearInterval(interval);
@@ -51,8 +54,12 @@ function App() {
 
   const handleAnswer = (answer: string) => {
     if (answer === currentNote.name) {
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      setBestStreak(Math.max(bestStreak, newStreak));
       setMessage("¡Correcto!");
     } else {
+      setStreak(0); // Reiniciar racha en respuesta incorrecta
       setMessage("Incorrecto, intenta de nuevo.");
     }
     setTimeout(() => {
@@ -70,6 +77,16 @@ function App() {
   return (
     <div className="flex flex-col items-center p-6">
       <h1 className="text-2xl font-bold">Identifica la nota</h1>
+      
+      {/* Contador de racha */}
+      <div className="mt-4 flex gap-4 items-center">
+        <div className="text-lg">
+          Racha actual: <span className="font-bold text-blue-600">{streak}</span>
+        </div>
+        <div className="text-lg">
+          Mejor racha: <span className="font-bold text-green-600">{bestStreak}</span>
+        </div>
+      </div>
       
       {/* Botón de Debug */}
       <button
@@ -108,14 +125,12 @@ function App() {
           notePosition={currentNote.position} 
         />
       </div>
-      <div className="mt-4 bg-gray-200 p-4 rounded-lg text-2xl font-bold">
-        Nota en la posición: {currentNote.position}
-      </div>
+      
       <div className="grid grid-cols-2 gap-4 mt-4">
         {options.map(option => (
           <button
             key={option}
-            className="bg-blue-500 text-white p-4 rounded-lg text-xl"
+            className="bg-blue-500 text-white p-8 cursor-pointer rounded-lg text-xl"
             onClick={() => handleAnswer(option)}
           >
             {option}
