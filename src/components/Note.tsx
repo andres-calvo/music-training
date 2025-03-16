@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface NoteProps {
-  position: number;  // 1 = Do (línea invisible), 2 = Re (espacio), 3 = Mi (línea 1), 4 = Fa (espacio), 5 = Sol (línea 2), 6 = La (espacio), 7 = Si (línea 3)
+  position: number;  // 1 = Do3 (línea invisible), 2 = Re3 (espacio), ..., 13 = La4 (línea adicional arriba)
   lineSpacing?: number;
   width?: number;
   height?: number;
@@ -37,8 +37,8 @@ const Note: React.FC<NoteProps> = ({
         fill="black"
       />
       
-      {/* Si es Do (posición 1), dibujamos la línea que lo atraviesa */}
-      {position === 1 && (
+      {/* Si es Do3 (posición 1) o La4 (posición 13), dibujamos la línea que lo atraviesa */}
+      {(position === 1 || position === 13) && (
         <line
           x1={(width / 2) - (noteWidth / 2) - 15}
           y1={noteY}

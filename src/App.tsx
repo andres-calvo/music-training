@@ -2,13 +2,19 @@ import { useState, useEffect } from "react";
 import StaffLines from "./components/StaffLines";
 
 const NOTES = [
-  { name: "Do", position: 1 },  // En la línea invisible
-  { name: "Re", position: 2 },  // En el espacio entre línea invisible y primera línea
-  { name: "Mi", position: 3 },  // En la primera línea
-  { name: "Fa", position: 4 },  // En el espacio entre primera y segunda línea
-  { name: "Sol", position: 5 }, // En la segunda línea
-  { name: "La", position: 6 },  // En el espacio entre segunda y tercera línea
-  { name: "Si", position: 7 }   // En la tercera línea
+  { name: "Do3", position: 1 },   // Do de la octava 3 (línea invisible)
+  { name: "Re3", position: 2 },   // Re de la octava 3 (espacio)
+  { name: "Mi3", position: 3 },   // Mi de la octava 3 (primera línea)
+  { name: "Fa3", position: 4 },   // Fa de la octava 3 (espacio)
+  { name: "Sol3", position: 5 },  // Sol de la octava 3 (segunda línea)
+  { name: "La3", position: 6 },   // La de la octava 3 (espacio)
+  { name: "Si3", position: 7 },   // Si de la octava 3 (tercera línea)
+  { name: "Do4", position: 8 },   // Do de la octava 4 (espacio)
+  { name: "Re4", position: 9 },   // Re de la octava 4 (cuarta línea)
+  { name: "Mi4", position: 10 },  // Mi de la octava 4 (espacio)
+  { name: "Fa4", position: 11 },  // Fa de la octava 4 (quinta línea)
+  { name: "Sol4", position: 12 }, // Sol de la octava 4 (espacio arriba)
+  { name: "La4", position: 13 }   // La de la octava 4 (línea adicional arriba)
 ];
 
 const BASE_TIMER = 30;
