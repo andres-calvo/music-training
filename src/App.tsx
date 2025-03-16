@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
+import StaffLines from "./components/StaffLines";
 
 const NOTES = [
-  { name: "Do", position: 1 },
-  { name: "Re", position: 2 },
-  { name: "Mi", position: 3 },
-  { name: "Fa", position: 4 },
-  { name: "Sol", position: 5 },
-  { name: "La", position: 6 },
-  { name: "Si", position: 7 }
+  { name: "Do", position: 1 },  // En la línea invisible
+  { name: "Re", position: 2 },  // En el espacio entre línea invisible y primera línea
+  { name: "Mi", position: 3 },  // En la primera línea
+  { name: "Fa", position: 4 },  // En el espacio entre primera y segunda línea
+  { name: "Sol", position: 5 }, // En la segunda línea
+  { name: "La", position: 6 },  // En el espacio entre segunda y tercera línea
+  { name: "Si", position: 7 }   // En la tercera línea
 ];
 
 const BASE_TIMER = 30;
@@ -24,6 +25,7 @@ function App() {
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const [timer, setTimer] = useState(BASE_TIMER);
   const [message, setMessage] = useState("");
+  const [isDebugMode, setIsDebugMode] = useState(false);
 
   useEffect(() => {
     const incorrectNotes = NOTES.filter(n => n.name !== currentNote.name)
@@ -62,6 +64,44 @@ function App() {
   return (
     <div className="flex flex-col items-center p-6">
       <h1 className="text-2xl font-bold">Identifica la nota</h1>
+      
+      {/* Botón de Debug */}
+      <button
+        className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
+        onClick={() => setIsDebugMode(!isDebugMode)}
+      >
+        {isDebugMode ? "Ocultar Debug" : "Mostrar Debug"}
+      </button>
+
+      {/* Modo Debug */}
+      {isDebugMode && (
+        <div className="mt-8 w-full max-w-2xl">
+          <h2 className="text-xl font-bold mb-4">Modo Debug - Todas las notas</h2>
+          <div className="space-y-8">
+            {NOTES.map(note => (
+              <div key={note.name} className="p-4 bg-gray-100 rounded">
+                <h3 className="text-lg font-semibold mb-2">{note.name} (Posición {note.position})</h3>
+                <StaffLines
+                  width={400}
+                  height={200}
+                  lineSpacing={20}
+                  notePosition={note.position}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Juego normal */}
+      <div className="mt-4">
+        <StaffLines 
+          width={400} 
+          height={200} 
+          lineSpacing={20}
+          notePosition={currentNote.position} 
+        />
+      </div>
       <div className="mt-4 bg-gray-200 p-4 rounded-lg text-2xl font-bold">
         Nota en la posición: {currentNote.position}
       </div>
