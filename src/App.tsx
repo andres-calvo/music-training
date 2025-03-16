@@ -202,7 +202,9 @@ function App() {
           </button>
         ))}
       </div>
-      <p className="mt-4 text-lg font-semibold">{message}</p>
+      <div className="h-12 flex items-center justify-center">
+        <p className="text-lg font-semibold">{message}</p>
+      </div>
       <p className="mt-2 text-red-500">Tiempo restante: {timer}s</p>
       <div className="mt-4 flex gap-4">
         <button className="bg-green-500 text-white p-2 rounded" onClick={() => handleSpeedChange(1)}>X1</button>
