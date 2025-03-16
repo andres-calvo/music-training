@@ -36,6 +36,18 @@ const Note: React.FC<NoteProps> = ({
         ry={noteHeight / 2}
         fill="black"
       />
+      
+      {/* Si es Do (posición 1), dibujamos la línea que lo atraviesa */}
+      {position === 1 && (
+        <line
+          x1={(width / 2) - (noteWidth / 2) - 15}
+          y1={noteY}
+          x2={(width / 2) + (noteWidth / 2) + 15}
+          y2={noteY}
+          stroke="black"
+          strokeWidth={1}
+        />
+      )}
     </svg>
   );
 };

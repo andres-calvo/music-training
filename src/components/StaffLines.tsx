@@ -22,23 +22,10 @@ const StaffLines: React.FC<StaffLinesProps> = ({
     height / 2 - lineSpacing,        // Cuarta línea
     height / 2 - (2 * lineSpacing)   // Quinta línea
   ];
-  
-  // La línea invisible mantiene la misma separación que las otras líneas
-  const invisibleLineY = height / 2 + (3 * lineSpacing);
 
   return (
     <div className="relative">
       <svg width={width} height={height}>
-        {/* Línea invisible en rojo */}
-        <line
-          x1={0}
-          y1={invisibleLineY}
-          x2={width}
-          y2={invisibleLineY}
-          stroke="red"
-          strokeWidth={1}
-        />
-        
         {/* Líneas visibles del pentagrama */}
         {visibleLinesY.map((y, index) => (
           <line
