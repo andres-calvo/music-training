@@ -34,6 +34,7 @@ function App() {
   const [isDebugMode, setIsDebugMode] = useState(false);
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
+  const [isAnswering, setIsAnswering] = useState(false);
 
   useEffect(() => {
     const incorrectNotes = NOTES.filter(n => n.name !== currentNote.name)
@@ -44,28 +45,47 @@ function App() {
   }, [currentNote]);
 
   useEffect(() => {
-    if (timer === 0) {
-      setMessage("¡Tiempo agotado!");
-      setStreak(0); // Reiniciar racha cuando se agota el tiempo
+    let interval: number;
+    
+    if (!isAnswering) {
+      if (timer === 0) {
+        setMessage("¡Tiempo agotado!");
+        setStreak(0);
+        setIsAnswering(true);
+        setTimeout(() => {
+          setCurrentNote(getRandomNote());
+          setMessage("");
+          setTimer(BASE_TIMER / speedMultiplier);
+          setIsAnswering(false);
+        }, 2000);
+      } else {
+        interval = window.setInterval(() => setTimer(t => (t > 0 ? t - 1 : 0)), 1000);
+      }
     }
-    const interval = setInterval(() => setTimer(t => (t > 0 ? t - 1 : 0)), 1000);
-    return () => clearInterval(interval);
-  }, [timer]);
+    
+    return () => {
+      if (interval) window.clearInterval(interval);
+    };
+  }, [timer, isAnswering, speedMultiplier]);
 
   const handleAnswer = (answer: string) => {
+    setIsAnswering(true); // Detiene el timer inmediatamente
+    
     if (answer === currentNote.name) {
       const newStreak = streak + 1;
       setStreak(newStreak);
       setBestStreak(Math.max(bestStreak, newStreak));
       setMessage("¡Correcto!");
     } else {
-      setStreak(0); // Reiniciar racha en respuesta incorrecta
+      setStreak(0);
       setMessage("Incorrecto, intenta de nuevo.");
     }
+
     setTimeout(() => {
       setCurrentNote(getRandomNote());
       setMessage("");
       setTimer(BASE_TIMER / speedMultiplier);
+      setIsAnswering(false); // Permite que el timer comience de nuevo
     }, 2000);
   };
 
@@ -132,6 +152,7 @@ function App() {
             key={option}
             className="bg-blue-500 text-white p-8 cursor-pointer rounded-lg text-xl"
             onClick={() => handleAnswer(option)}
+            disabled={isAnswering}
           >
             {option}
           </button>
